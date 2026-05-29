@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Interactiva</title>
+  <link rel="stylesheet" href="calculadora.css">
+</head>
+<body>
+  <div class="calculadora">
+    <!-- Display -->
+    <div class="display">
+      <div class="operacion-anterior" id="operacion-anterior"></div>
+      <div class="operacion-actual" id="operacion-actual">0</div>
+    </div>
+
+    <!-- Botones -->
+    <div class="botones">
+      <button class="btn btn-funcion" id="clear">C</button>
+      <button class="btn btn-funcion" id="delete">⌫</button>
+      <button class="btn btn-operador" data-operador="÷">÷</button>
+      <button class="btn btn-operador" data-operador="×">×</button>
+
+      <button class="btn btn-numero" data-numero="7">7</button>
+      <button class="btn btn-numero" data-numero="8">8</button>
+      <button class="btn btn-numero" data-numero="9">9</button>
+      <button class="btn btn-operador" data-operador="-">-</button>
+
+      <button class="btn btn-numero" data-numero="4">4</button>
+      <button class="btn btn-numero" data-numero="5">5</button>
+      <button class="btn btn-numero" data-numero="6">6</button>
+      <button class="btn btn-operador" data-operador="+">+</button>
+
+      <button class="btn btn-numero" data-numero="1">1</button>
+      <button class="btn btn-numero" data-numero="2">2</button>
+      <button class="btn btn-numero" data-numero="3">3</button>
+      <button class="btn btn-igual" id="igual" rowspan="2">=</button>
+
+      <button class="btn btn-numero btn-cero" data-numero="0">0</button>
+      <button class="btn btn-numero" data-numero=".">.</button>
+    </div>
+  </div>
+
+  <script src="calculadora.js"></script>
+</body>
+</html>
