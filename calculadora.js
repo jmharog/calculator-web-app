@@ -54,6 +54,7 @@ function calcular() {
       default: return
     }
     resultado = Math.round((resultado + Number.EPSILON) * 100000000) / 100000000
+    agregarAlHistorial(`${anterior} ${operador} ${actual} = ${resultado}`)
     numeroActual = resultado.toString()
     numeroAnterior = ''
     operador = null
@@ -97,4 +98,117 @@ document.getElementById('delete').addEventListener('click', () => {
     numeroActual = '0'
   }
   actualizarDisplay()
+})
+
+// SOPORTE PARA TECLADO
+document.addEventListener('keydown', (evento) => {
+  const tecla = evento.key
+
+  // Números y punto decimal
+  if ('0123456789.'.includes(tecla)) {
+    evento.preventDefault()
+    agregarNumero(tecla)
+  }
+
+  // Operadores
+  else if (tecla === '+') {
+    evento.preventDefault()
+    seleccionarOperador('+')
+  }
+  else if (tecla === '-') {
+    evento.preventDefault()
+    seleccionarOperador('-')
+  }
+  else if (tecla === '*') {
+    evento.preventDefault()
+    seleccionarOperador('×')
+  }
+  else if (tecla === '/') {
+    evento.preventDefault()
+    seleccionarOperador('÷')
+  }
+
+  // Igual (Enter o =)
+  else if (tecla === 'Enter' || tecla === '=') {
+    evento.preventDefault()
+    calcular()
+  }
+
+  // Limpiar (Escape)
+  else if (tecla === 'Escape') {
+    limpiar()
+  }
+
+  // Borrar (Backspace)
+  else if (tecla === 'Backspace') {
+    evento.preventDefault()
+    if (numeroActual.length > 1) {
+      numeroActual = numeroActual.slice(0, -1)
+    } else {
+      numeroActual = '0'
+    }
+    actualizarDisplay()
+  }
+})
+
+// HISTORIAL
+const listaHistorial = document.getElementById('lista-historial')
+let historial = []
+
+function agregarAlHistorial(operacion) {
+  historial.unshift(operacion) // Añadir al principio
+
+  // Limitar a las últimas 10 operaciones
+  if (historial.length > 10) {
+    historial = historial.slice(0, 10)
+  }
+
+  guardarHistorial()
+  renderizarHistorial()
+}
+
+function renderizarHistorial() {
+  // Limpiar el contenedor
+  listaHistorial.innerHTML = ''
+
+  historial.forEach(operacion => {
+    const div = document.createElement('div')
+    div.className = 'operacion-historial'
+    div.textContent = operacion
+
+    // Al hacer click, usar el resultado de esa operación
+    div.addEventListener('click', () => {
+      const resultado = operacion.split(' = ')[1]
+      if (resultado) {
+        numeroActual = resultado
+        numeroAnterior = ''
+        operador = null
+        debeReset = true
+        actualizarDisplay()
+      }
+    })
+
+    listaHistorial.appendChild(div)
+  })
+}
+
+function guardarHistorial() {
+  localStorage.setItem('calculadora-historial', JSON.stringify(historial))
+}
+
+function cargarHistorial() {
+  const guardado = localStorage.getItem('calculadora-historial')
+  if (guardado) {
+    historial = JSON.parse(guardado)
+    renderizarHistorial()
+  }
+}
+
+cargarHistorial()
+
+// Botón de limpiar historial
+document.getElementById('limpiar-historial').addEventListener('click', () => {
+  historial = []
+  renderizarHistorial()
+  guardarHistorial()
 })

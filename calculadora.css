@@ -11,6 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .calculadora {
@@ -18,7 +19,8 @@ body {
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  max-width: 300px;
+  width: 340px;
+  flex: 0 0 340px;
 }
 
 .display {
@@ -45,8 +47,10 @@ body {
 
 .botones {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(5, 64px);
   gap: 10px;
+  min-width: 0;
 }
 
 .btn {
@@ -54,7 +58,13 @@ body {
   border-radius: 10px;
   font-size: 18px;
   font-weight: bold;
-  padding: 20px;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -74,3 +84,83 @@ body {
 .btn-igual { background: #27ae60; color: white; grid-row: span 2; }
 .btn-igual:hover { background: #229954; }
 .btn-cero { grid-column: span 2; }
+
+.calculadora-container {
+  display: flex;
+  gap: 30px;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.historial {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 250px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.historial h3 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+#lista-historial {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.operacion-historial {
+  padding: 8px;
+  margin: 5px 0;
+  background: #f8f9fa;
+  border-radius: 5px;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.operacion-historial:hover {
+  background: #e9ecef;
+}
+
+#limpiar-historial {
+  width: 100%;
+  padding: 10px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  body {
+    align-items: flex-start;
+    padding: 20px 12px;
+    overflow-x: hidden;
+  }
+
+  .calculadora-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    width: 340px;
+    max-width: 340px;
+  }
+
+  .calculadora {
+    width: 340px;
+  }
+
+  .historial {
+    width: 340px;
+    max-height: 320px;
+  }
+}
